@@ -10,5 +10,15 @@ test("Single Select Drop down", async (page) => {
   //await page.locator("#country").selectOption({label:"India"}); // by using label
   //await page.locator("#country").selectOption({index:3}); // by using index
 
-  await page.waitForLoadState("networkidle");
+  //2) check number of options in the dropdown (count)
+const dropdownOptions: Locator = page.locator("#country option");
+await expect(dropdownOptions).toHaveCount(10);
+
+//3) check an option present in the dropdown
+
+const optionsText: string[] = (await dropdownOptions.allTextContents()).map(text => text.trim());
+console.log(optionsText);
+
+expect(optionsText).toContain("Japan");
+  await page.waitForTimeout(5000);
 });
